@@ -19,27 +19,8 @@ function formatDate(timestamp) {
     "Friday",
     "Saturday",
   ];
-  let day = days[date.getDay()];
+  let day = days[dayIndex];
   return `${day} ${hours}:${minutes}`;
-}
-
-function displayForecast(response) {
-  console.log(response.data);
-  let forecastElement = document.querySelector("#forecast");
-
-let day = ["Thur", "Fri", "Sat", "Sun"];
-
-let forcastHTML = `<div class"row>`;
-days.foreEach(function (day) {
-  forecastHTML = forecastHTML + `<div class"row`>;
-}
-);
-
-function getForecast(coordinates) {
-  console.log(coordinates);
-  let apiKey = "73c98c5f5oe41a4380e1be70ac2fb15t";
-  let apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates}&lon=${coordinates}&appid=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(displayForecast);
 }
 
 function displayTemperature(response) {
@@ -64,12 +45,10 @@ function displayTemperature(response) {
     `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
   );
   iconElement.setAttribute("alt", response.data.weather[0].description);
-
-  getForecast(response.data.coord);
 }
 
 function search(city) {
-  let apiKey = "73c98c5f5oe41a4380e1be70ac2fb15t";
+  let apiKey = "dd0a9897597d72cf07bb7f69d232f1da";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displayTemperature);
 }
@@ -83,16 +62,12 @@ function handleSubmit(event) {
 function displayFahrenheitTemperature(event) {
   event.preventDefault();
   let temperatureElement = document.querySelector("#temperature");
-  celsiusLink.classList.remove("active");
-  fahrenheitLink.classList.add("active");
   let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
   temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
 }
 
 function displayCelsiusTemperature(event) {
   event.preventDefault();
-  celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
   let temperatureElement = document.querySelector("#temperature");
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
 }
@@ -108,4 +83,4 @@ fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
 let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
-search("Lagos");
+search("lagos");
